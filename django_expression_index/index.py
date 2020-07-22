@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.backends.utils import names_digest, split_identifier
+from functools import partial
 
 class ExpressionIndex(models.Index):
     def __init__(self, *, expressions=(), name=None, db_tablespace=None, opclasses=(), condition=None):
@@ -17,7 +18,7 @@ class ExpressionIndex(models.Index):
     def set_name_with_model(self, model):
         self.fields_orders=[(model._meta.pk.name,'')]
         _, table_name = split_identifier(model._meta.db_table)
-        digest=names_digest(*self.fields, length=6)
+        digest=names_digest(table_name, *self.fields, length=6)
         self.name=f"{table_name[:19]}_{digest}_{self.suffix}"
         
     def create_sql(self, model, schema_editor, using='', **kwargs):
@@ -42,7 +43,12 @@ class ExpressionIndex(models.Index):
         return statement
     
     def compile_expression(self, expression, compiler):
-        expression=expression.resolve_expression(compiler.query, allow_joins=False)
+        def resolve_ref(original, name, allow_joins=True, reuse=None, summarize=False, simple_col=False):
+            return original(name, allow_joins, reuse, summarize, True)
+        
+        query=compiler.query
+        query.resolve_ref=partial(resolve_ref, query.resolve_ref)
+        expression=expression.resolve_expression(query, allow_joins=False)
         sql, params=expression.as_sql(compiler, compiler.connection)
         return sql % params
 
