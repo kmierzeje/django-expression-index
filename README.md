@@ -52,3 +52,7 @@ There is a monkey-patch implemented on `django.db.models.sql.query.Query` instan
 ```
 
 If you know a better solution, please let me know!
+
+## Compatibility
+
+It was tested with Django 3.0.8 on Python 3.7.
