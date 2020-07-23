@@ -1,5 +1,7 @@
 # django-expression-index
 
+[![PyPI](https://img.shields.io/pypi/v/django-expression-index.svg)](https://pypi.org/project/django-expression-index/)
+
 django-expression-index provides implementation of subclass of `django.db.models.Index`, which enables indexing tables using expressions.
 
 ## What problem does this solve?
