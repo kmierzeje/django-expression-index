@@ -10,10 +10,10 @@ class ExpressionIndex(models.Index):
         self.expressions=expressions
     
     def deconstruct(self):
-        path, args, kwargs = super().deconstruct()
+        path, _, kwargs = super().deconstruct()
         kwargs.pop('fields')
         kwargs['expressions'] = self.expressions
-        return path, args, kwargs
+        return path, (), kwargs
     
     def set_name_with_model(self, model):
         self.fields_orders=[(model._meta.pk.name,'')]

@@ -4,6 +4,8 @@
 
 django-expression-index provides implementation of subclass of `django.db.models.Index`, which enables indexing tables using expressions.
 
+In Django 3.2 this solution is obsoleted by built-in support of expression index.
+
 ## What problem does this solve?
 
 Currently `django.db.models.Index` only accepts field names in `fields` parameter. There is no way to add expression index other than using raw SQL.
@@ -57,4 +59,5 @@ If you know a better solution, please let me know!
 
 ## Compatibility
 
-It was tested with Django 3.0.8 on Python 3.7.
+It was tested with Django 2.2.13 and 3.x.
+In release 0.2.0 code was updated to make it compatible with Django 3.2
