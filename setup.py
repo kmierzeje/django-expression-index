@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     author='Kamil Mierzejewski',
     name='django-expression-index',
-    version='0.2.0',
+    version='0.2.1',
     description='Subclass of django.db.models.Index, which enables indexing on expressions.',
     long_description=long_description,
     long_description_content_type='text/markdown',

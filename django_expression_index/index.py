@@ -22,6 +22,8 @@ class ExpressionIndex(models.Index):
         self.name=f"{table_name[:19]}_{digest}_{self.suffix}"
         
     def create_sql(self, model, schema_editor, using='', **kwargs):
+        if hasattr(self, 'contains_expressions'):
+            return super().create_sql(model, schema_editor, using, **kwargs)
         
         class Descriptor:
             db_tablespace=''
@@ -31,7 +33,8 @@ class ExpressionIndex(models.Index):
         col_suffixes = [''] * len(self.expressions)
         condition = self._get_condition_sql(model, schema_editor)
         statement= schema_editor._create_index_sql(
-            model, [Descriptor(e) for e in self.expressions], 
+            model, 
+            fields = [Descriptor(e) for e in self.expressions], 
             name=self.name, using=using, db_tablespace=self.db_tablespace,
             col_suffixes=col_suffixes, opclasses=self.opclasses, condition=condition,
             **kwargs,

@@ -60,4 +60,4 @@ If you know a better solution, please let me know!
 ## Compatibility
 
 It was tested with Django 2.2.13 and 3.x.
-In release 0.2.0 code was updated to make it compatible with Django 3.2
+In release 0.2.1 code was updated to make it compatible with Django 3.2
